@@ -10,14 +10,17 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-            - name: Testing Start
-              run: echo Hello World!
             - name: Repository checkout
               uses: actions/checkout@v4
             - name: Setup Node.js Environment
               uses: actions/setup-node@v4
               with:
                 node-version: 'latest'
+            - name: Cache node_modules
+              uses: actions/cache@v4
+              with:
+                path: node_modules
+                key: node-modules-${{ hashFiles('package-lock.json') }}
             - name: Install Npm Packages
               run: npm install
             - name: Run Testing
@@ -27,15 +30,17 @@ jobs:
       runs-on: ubuntu-latest
       needs: test
       steps:
-        - name: Building Start
-          run: echo Building!
         - name: Repository checkout
           uses: actions/checkout@v4
         - name: Setup Node.js Environment
           uses: actions/setup-node@v4
           with:
             node-version: 'latest'
-        - name: Install Npm Packages
-          run: npm install
+        - name: Restore node_modules cache
+          uses: actions/cache@v4
+          with:
+            path: node_modules
+            key: node-modules-${{ hashFiles('package-lock.json') }}
+
         - name: Run Build
           run: npm run build
