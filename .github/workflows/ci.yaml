@@ -12,6 +12,12 @@ jobs:
         steps:
             - name: Testing Start
               run: echo Hello World!
+            - name: Repository checkout
+              uses: actions/checkout@v4
+            - name: Setup Node.js Environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: 'latest'
             - name: Install Npm Packages
               run: npm install
             - name: Run Testing
