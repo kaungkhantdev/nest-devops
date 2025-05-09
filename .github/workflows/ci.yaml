@@ -1,0 +1,18 @@
+name: CI NestJs
+
+on:
+    pull_request:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs: 
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Testing Start
+              run: echo Hello World!
+            - name: Install Npm Packages
+              run: npm install
+            - name: Run Testing
+              run: npm run test
