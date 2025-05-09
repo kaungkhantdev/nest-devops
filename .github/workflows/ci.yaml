@@ -22,3 +22,20 @@ jobs:
               run: npm install
             - name: Run Testing
               run: npm run test
+
+    build:
+      runs-on: ubuntu-latest
+      needs: test
+      steps:
+        - name: Building Start
+          run: echo Building!
+        - name: Repository checkout
+          uses: actions/checkout@v4
+        - name: Setup Node.js Environment
+          uses: actions/setup-node@v4
+          with:
+            node-version: 'latest'
+        - name: Install Npm Packages
+          run: npm install
+        - name: Run Build
+          run: npm run build
