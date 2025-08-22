@@ -20,7 +20,7 @@ export class PostService {
 
   async findAll(): Promise<Post[]> {
     return await this.prisma.post.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { created_at: 'desc' },
     });
   }
 
