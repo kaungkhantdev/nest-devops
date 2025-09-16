@@ -1,0 +1,41 @@
+services:
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["run", "db:migrate"]
+    environment:
+      - DATABASE_URL=mysql://nestuser:1234@db:3306/test
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["run", "start:prod"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mysql://nestuser:1234@db:3306/test
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: 123456
+       MYSQL_DATABASE: test
+       MYSQL_USER: nestuser
+       MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
