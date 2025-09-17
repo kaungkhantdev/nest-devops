@@ -1,16 +1,14 @@
-name: NEST CI Deploy
+name: NEST CI Release
 
 on:
     pull_request:
       types: [opened, synchronize, reopened]
       branches:
-        - main
-        - dev
+        - release/*
     workflow_dispatch:
     push:
       branches:
-        - main
-        - dev
+        - release/*
 
 concurrency:
   group: ${{github.workflow }}-${{ github.ref }}
@@ -20,7 +18,6 @@ jobs:
     common_jobs:
         uses: ./.github/workflows/common_jobs.yml
     docker-build: 
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         runs-on: ubuntu-latest
         needs:
           - common_jobs
@@ -35,6 +32,15 @@ jobs:
             uses: docker/setup-buildx-action@v3
 
           - name: Build Docker Image
-            run: docker build --platform linux/amd64 -t nest-devops:latest .
+            run: docker build --platform linux/amd64 -t nest-devops:latest . --load
 
-            
+          - name: Login to Docker Hub
+            uses: docker/login-action@v3
+            with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+          - name: Push Docker image to Docker Hub
+            run: |
+                docker tag nest-devops ${{ secrets.DOCKERHUB_USERNAME }}/nest-devops:latest
+                docker push ${{ secrets.DOCKERHUB_USERNAME }}/nest-devops:latest
