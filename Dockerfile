@@ -6,7 +6,7 @@ COPY package*.json ./
 
 COPY prisma ./prisma/
 
-RUN npm install --production && npx prisma generate
+RUN npm install -g @nestjs/cli && npm install --production && npx prisma generate
 
 COPY . .
 
@@ -19,8 +19,6 @@ COPY --from=builder --chown=node:node /usr/local/app/generated /generated
 COPY --from=builder --chown=node:node /usr/local/app/dist /dist
 COPY --from=builder --chown=node:node /usr/local/app/node_modules /node_modules
 COPY --from=builder --chown=node:node /usr/local/app/package*.json ./
-
-RUN npm install -g @nestjs/cli
 
 USER node
 
