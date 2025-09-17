@@ -17,7 +17,9 @@ concurrency:
 jobs:
     common_jobs:
         uses: ./.github/workflows/common_jobs.yml
-        secrets: inherit
+        secrets:
+          mysql_user: ${{ secrets.MYSQL_USER }}
+          mysql_password: ${{ secrets.MYSQL_PASSWORD }}
     docker-build: 
         runs-on: ubuntu-latest
         needs:
