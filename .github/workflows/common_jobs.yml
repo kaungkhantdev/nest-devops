@@ -17,7 +17,7 @@ jobs:
             
             - name: Set up Node.js
               id: node-setup
-              uses: ./github/actions/node-setup-action
+              uses: ./.github/actions/node-setup-action
               with:
                   node-version: '22'
 
@@ -32,7 +32,7 @@ jobs:
             
             - name: Set up Node.js
               id: node-setup
-              uses: ./github/actions/node-setup-action
+              uses: ./.github/actions/node-setup-action
               with:
                   node-version: '22'
 
@@ -67,7 +67,7 @@ jobs:
             
             - name: Set up Node.js
               id: node-setup
-              uses: ./github/actions/node-setup-action
+              uses: ./.github/actions/node-setup-action
               with:
                   node-version: '22'
             - name: Prisma Generate
