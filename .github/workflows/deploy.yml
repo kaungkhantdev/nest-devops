@@ -5,10 +5,12 @@ on:
       types: [opened, synchronize, reopened]
       branches:
         - main
+        - dev
     workflow_dispatch:
     push:
       branches:
         - main
+        - dev
 
 concurrency:
   group: ${{github.workflow }}-${{ github.ref }}
