@@ -6,7 +6,7 @@ COPY package*.json ./
 
 COPY prisma ./prisma/
 
-RUN npm install -g @nestjs/cli && npm install --production && npx prisma generate
+RUN npm install -g @nestjs/cli && npm install && npx prisma generate
 
 COPY . .
 
