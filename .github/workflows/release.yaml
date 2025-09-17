@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
     common_jobs:
-        uses: ./.github/workflows/common_jobs.yml
+        uses: ./.github/workflows/common_jobs.yaml
         secrets:
           mysql_user: ${{ secrets.MYSQL_USER }}
           mysql_password: ${{ secrets.MYSQL_PASSWORD }}
