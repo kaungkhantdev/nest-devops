@@ -84,10 +84,10 @@ jobs:
               run: npm ci
 
             - name: Prisma Generate
-              run: npm run prisma:generate
+              run: npx prisma generate
 
             - name: Run Migrations
-              run: npx prisma generate
+              run: npm run db:migrate
 
             - name: Run Tests
               run: npm test
