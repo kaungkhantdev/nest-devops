@@ -20,6 +20,8 @@ COPY --from=builder --chown=node:node /usr/local/app/dist /dist
 COPY --from=builder --chown=node:node /usr/local/app/node_modules /node_modules
 COPY --from=builder --chown=node:node /usr/local/app/package*.json ./
 
+RUN npm install -g @nestjs/cli
+
 USER node
 
 EXPOSE 3000
